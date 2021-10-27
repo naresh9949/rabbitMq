@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { makeStyles } from '@mui/styles';
-import API from './../API'
+import axios from 'axios';
 
 const useStyles = makeStyles({
   root: {
@@ -19,7 +19,7 @@ export default function ActiveButton(props) {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState(props.state);
-  const data = props.data;
+  const listeners = props.data;
   const idx = props.idx;
   const [name, setName] = useState(props.name);
 
@@ -27,19 +27,32 @@ export default function ActiveButton(props) {
     setLoading(true);
 
     // activate or deactive the listner
-    if(state===true)
-      API.DeactivateListner(data[idx]);
-    else
-      API.ActivateListner(data[idx]);
-
+    axios.post(listeners[idx].ActionURL)
+    .then((res)=>{
+      const listener = res.data.Body.Listeners[0];
+      listeners[idx] = listener;
     // changing the state of button
     setState(!state);
 
     //updating the data that we have
-    data[idx].connection_status = data[idx].connection_status?false:true;
-    props.action([...data])
+    props.action([...listeners])
     setName(getNewName(name))
     setLoading(false);
+
+    }).catch(err=>{
+      console.log(err)
+    })
+  
+    
+
+    // // changing the state of button
+    // setState(!state);
+
+    // //updating the data that we have
+    // listeners[idx].IsActive = listeners[idx].IsActive?false:true;
+    // props.action([...listeners])
+    // setName(getNewName(name))
+    // setLoading(false);
    
   }
 

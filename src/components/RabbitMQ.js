@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import { tableCellClasses } from "@mui/material/TableCell";
 import styled from "styled-components";
-import API from "./../API";
+import axios from 'axios';
 import ActivateButton from "./Button";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -27,12 +27,10 @@ const RabbitMQ = () => {
   const [width,setWidth] = useState(window.innerWidth);
   const breakpoint = 620;
 
-  console.log(width);
+  //console.log(width);
 
   var idx = -1;
-  const [data, setData] = useState(() => {
-    return API.getData();
-  });
+  const [data, setData] = useState([]);
 
   const getConnectionType = (ConnectionType) => {
     if (ConnectionType === true) return "Primary";
@@ -55,6 +53,11 @@ const RabbitMQ = () => {
   };
   useEffect(() => {
     window.addEventListener("resize", () => setWidth(window.innerWidth));
+    axios.get('https://staging-prutils.systempr.com/api/RabbitMQConnectionAPI/GetAllListeners')
+    .then((res) => {
+      const listeners = res.data.Body.Listeners;
+      setData(listeners)
+    })
   }, []);
   return (
     <Container>
@@ -73,26 +76,26 @@ const RabbitMQ = () => {
         <TableBody>
           {data.map((row) => (
             <TableRow
-              key={row.listner}
+              key={row.ListenerName}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.listner}
+              <TableCell align="center" component="th" scope="row">
+              {row.ListenerName}
               </TableCell>
-              <TableCell align="center">{row.queue}</TableCell>
-              <TableCell align="center">{row.application}</TableCell>
+              <TableCell align="center">{row.QueueName}</TableCell>
+              <TableCell align="center">{row.Application}</TableCell>
               {width > breakpoint && <TableCell align="center">
-                  {getConnectionType(row.connection_type)}
+                  {getConnectionType(row.IsPrimaryConnection)}
                 </TableCell>}
               
 
               <TableCell align="center">
-                {getConnectionStatus(row.connection_status)}
+                {getConnectionStatus(row.IsActive)}
               </TableCell>
               <TableCell align="center">
                 <ActivateButton
-                  state={row.connection_status}
-                  name={getButtonText(row.connection_status)}
+                  state={row.IsActive}
+                  name={getButtonText(row.IsActive)}
                   data={data}
                   idx={getIndex()}
                   action={setData}
