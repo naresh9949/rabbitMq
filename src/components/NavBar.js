@@ -23,7 +23,7 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Welcome to Home Screen
+          Rabbit MQ Listeners
           </Typography>
           <Button color="inherit" variant="outlined">Login</Button>
           <Box sx={{ m: 1 }}/>
