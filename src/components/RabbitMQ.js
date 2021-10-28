@@ -12,7 +12,10 @@ import { tableCellClasses } from "@mui/material/TableCell";
 import styled from "styled-components";
 import axios from 'axios';
 import ActivateButton from "./Button";
+import { useErrorHandler } from "react-error-boundary";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
+
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "black",
     color: "white",
@@ -23,8 +26,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
+
 const RabbitMQ = () => {
   const [width,setWidth] = useState(window.innerWidth);
+  const handleError = useErrorHandler();
   const breakpoint = 620;
 
   //console.log(width);
@@ -57,8 +62,10 @@ const RabbitMQ = () => {
     .then((res) => {
       const listeners = res.data.Body.Listeners;
       setData(listeners)
+    }).catch(err=>{
+      handleError(err);
     })
-  }, []);
+  },[handleError]);
   return (
     <Container>
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>

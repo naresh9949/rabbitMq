@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
+import { useErrorHandler } from "react-error-boundary";
 
 const useStyles = makeStyles({
   root: {
@@ -22,6 +23,7 @@ export default function ActiveButton(props) {
   const listeners = props.data;
   const idx = props.idx;
   const [name, setName] = useState(props.name);
+  const handleError = useErrorHandler();
 
   function ActivateDeactivate() {
     setLoading(true);
@@ -34,26 +36,14 @@ export default function ActiveButton(props) {
     // changing the state of button
     setState(!state);
 
-    //updating the data that we have
+    //updating the listeners with out fetching all listeners that we have
     props.action([...listeners])
     setName(getNewName(name))
     setLoading(false);
 
     }).catch(err=>{
-      console.log(err)
+      handleError(err);
     })
-  
-    
-
-    // // changing the state of button
-    // setState(!state);
-
-    // //updating the data that we have
-    // listeners[idx].IsActive = listeners[idx].IsActive?false:true;
-    // props.action([...listeners])
-    // setName(getNewName(name))
-    // setLoading(false);
-   
   }
 
   return (
