@@ -1,11 +1,11 @@
 import React from "react";
-import RabbitMqTable from './components/RabbitMqTable';
+import RabbitMq from './components/RabbitMQ';
 import NavBar from "./components/NavBar";
 function App() {
   return (
     <div className="App">
       <NavBar />
-     <RabbitMqTable/>
+     <RabbitMq/>
     </div> 
   );
 }
