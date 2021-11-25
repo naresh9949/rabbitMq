@@ -120,4 +120,3 @@ const RabbitMQ = () => {
 
 export default RabbitMQ;
 
-// {width > 660 && <h2>You have {width} unread messages.</h2>}

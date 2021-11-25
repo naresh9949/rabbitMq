@@ -6,28 +6,36 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Logscreen from './Logscreen';
 
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar(props) {
+  const curpath = window.location.pathname;
+  var title="Home";
+  switch(curpath){
+    case "/":title="Home"
+              break;
+    case "/rabbitMq":title="Rabbit MQ Listeners"
+              break;
+    case "/work-order-maintanance":title="Work Order Maintanance"
+              break;
+    case "/UserWorkZone":title="User WorkZone"
+              break;
+    default:title="Home";
+  }
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1}}>
       <AppBar position="sticky">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Rabbit MQ Listeners
+        <Toolbar align="center">
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1,marginLeft:{sm:32}}}>
+          {title}
           </Typography>
-          <Button color="inherit" variant="outlined">Login</Button>
+          <Typography variant="subtitle2"  component="div">
+          Logged in as knaresh
+          </Typography>
           <Box sx={{ m: 1 }}/>
-          <Button color="inherit" variant="outlined">SignUp</Button>
+          <Button color="inherit" variant="outlined">Logout</Button>
+          <Logscreen/>
         </Toolbar>
       </AppBar>
       <Box sx={{ m: 1 }}/>

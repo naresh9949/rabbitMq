@@ -29,6 +29,8 @@ export default function ActiveButton(props) {
     setLoading(true);
 
     // activate or deactive the listner
+    console.log("Working fine")
+    console.log(listeners[idx].ActionURL);
     axios.post(listeners[idx].ActionURL)
     .then((res)=>{
       const listener = res.data.Body.Listeners[0];
@@ -42,6 +44,7 @@ export default function ActiveButton(props) {
     setLoading(false);
 
     }).catch(err=>{
+      console.log(err);
       handleError(err);
     })
   }

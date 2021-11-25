@@ -1,8 +1,8 @@
 import React from "react";
-import RabbitMQ from "./RabbitMqTable";
-import BasicBreadcrumbs from "./Breadcrumbs";
+import RabbitMQTable from "./RabbitMqTable";
+import BasicBreadcrumbs from "./../Breadcrumbs";
 import { ErrorBoundary } from "react-error-boundary";
-import ErrorComponent from "./ErrorComponent";
+import ErrorComponent from "./../ErrorComponent";
 
   const ErrorHandler = (err,errinfo)=>{
     console.log(err,errinfo);
@@ -10,9 +10,9 @@ import ErrorComponent from "./ErrorComponent";
 function RabbitMqTable() {
   return (
     <React.Fragment>
-      <BasicBreadcrumbs/>
+      <BasicBreadcrumbs cur_screen="RabbitMQ Listeners"/>
       <ErrorBoundary FallbackComponent={ErrorComponent} onError={ErrorHandler}>
-      <RabbitMQ />
+      <RabbitMQTable/>
       </ErrorBoundary>
     </React.Fragment>
   );
